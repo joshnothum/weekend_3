@@ -8,11 +8,19 @@ function weReady() {
 }
 
 function clickHandler() {
-    $('#addTask').on('click', refreshTasks);
+    $('#addTask').on('click', taskStasher);
 }
 
 
 function taskStasher() {
+    var task = $('#taskInput').val();
+    var status = 'N';
+
+    var addTask = {task, status};
+    console.log(addTask);
+    
+
+
     $.ajax({
         method: "POST",
         url: '/queHacer',
@@ -32,6 +40,8 @@ function taskStasher() {
 
 function taskAdder(response) {
     console.log('we are here in taskAdder');
+    console.log(response);
+    
     for (var i = 0; i < response.length; i++) {
        var newTask = response[i].task;
        var completion = response[i].status;
@@ -51,7 +61,7 @@ function refreshTasks() {
 
     $.ajax({
         method: "GET",
-        url: '/quehacer'
+        url: '/queHacer'
     }).done(function (response) {
         console.log('we did it!', response);
         $('#taskHeader').empty();

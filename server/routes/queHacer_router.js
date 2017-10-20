@@ -41,4 +41,36 @@ queHacer.get('/', function (req, res) {
     }); // END POOL
 }); // END GET ROUTE
 
+queHacer.post('/', function (req, res) {
+    // Attempt to connect to the database
+    var newTask = req.body;
+    console.log(newTask);
+    
+    pool.connect(function (errorConnectingToDb, db, done) {
+        if (errorConnectingToDb) {
+            // There was an error and no connection was made
+            console.log('Error connecting', errorConnectingToDb);
+            res.sendStatus(500);
+        } else {
+            // We connected to the db!!!!! pool -1
+            var queryText = 'INSERT INTO "quehacer" (task, status) VALUES ($1, $2);';
+            console.log(queryText);
+            
+            db.query(queryText,[newTask.taskInput, newTask.status], function (errorMakingQuery, result) {
+                // We have received an error or result at this point
+                done(); // pool +1
+                if (errorMakingQuery) {
+                    console.log('Error making query', errorMakingQuery);
+                    res.sendStatus(500);
+                } else {
+                    console.log(result.rows);
+
+
+                    res.send(req.body);
+                }
+            }); // END QUERY
+        }
+    }); // END POOL
+}); // END POST ROUTE
+
 module.exports = queHacer;
