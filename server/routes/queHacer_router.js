@@ -22,7 +22,7 @@ queHacer.get('/', function (req, res) {
             res.sendStatus(500);
         } else {
             // We connected to the db!!!!! pool -1
-            var queryText = 'SELECT * FROM "queHacer";';
+            var queryText = 'SELECT * FROM "quehacer";';
             db.query(queryText, function (errorMakingQuery, result) {
                 // We have received an error or result at this point
                 done(); // pool +1
@@ -30,6 +30,10 @@ queHacer.get('/', function (req, res) {
                     console.log('Error making query', errorMakingQuery);
                     res.sendStatus(500);
                 } else {
+                    console.log(result);
+                    console.log(result.rows);
+                    
+                    
                     res.send(result.rows);
                 }
             }); // END QUERY

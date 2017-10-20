@@ -7,16 +7,18 @@ function weReady() {
 }
 
 function clickHandler() {
-    $('#addTask').on('click', taskAdder);
+    $('#addTask').on('click', refreshTasks);
 }
 
 function taskAdder(response) {
-    console.log('we are here');
+    console.log('we are here in taskAdder');
+    for (var i = 0; i < response.length; i++) {
+       var newTask = response[i].task;
 
-    var $li = $('<li>' + newTask + '</li>');
+       var $li = $('<li>' + newTask + '</li>');
 
-    $('#taskHeader').append($li);
-
+       $('#taskHeader').append($li);
+    }
 }
 
 function refreshTasks() {
@@ -25,8 +27,8 @@ function refreshTasks() {
         method: "GET",
         url: '/quehacer'
     }).done(function (response) {
+        console.log('we did it!', response);
         taskAdder(response);
-        console.log('we did it!', reponse);
         
         
     }).fail(function (error) {
