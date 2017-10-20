@@ -4,6 +4,7 @@ $(document).ready(weReady);
 function weReady() {
     console.log('icky thump!');
     clickHandler();
+    refreshTasks();
 }
 
 function clickHandler() {
@@ -14,8 +15,11 @@ function taskAdder(response) {
     console.log('we are here in taskAdder');
     for (var i = 0; i < response.length; i++) {
        var newTask = response[i].task;
+       var completion = response[i].status;
 
-       var $li = $('<li>' + newTask + '</li>');
+       var $li = $('<li>' + newTask + ':'+ completion +'</li>');
+
+
 
        $('#taskHeader').append($li);
     }
@@ -28,6 +32,7 @@ function refreshTasks() {
         url: '/quehacer'
     }).done(function (response) {
         console.log('we did it!', response);
+        $('#taskHeader').empty();
         taskAdder(response);
         
         
