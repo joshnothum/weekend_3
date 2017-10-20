@@ -11,17 +11,39 @@ function clickHandler() {
     $('#addTask').on('click', refreshTasks);
 }
 
+
+function taskStasher() {
+    $.ajax({
+        method: "POST",
+        url: '/queHacer',
+        data: addTask
+    }).done(function (response) {
+        console.log(response);
+        taskAdder(response);
+        
+        
+    }).fail(function (message) {
+        console.log('try again!', message);
+        
+        
+    });
+    
+}
+
 function taskAdder(response) {
     console.log('we are here in taskAdder');
     for (var i = 0; i < response.length; i++) {
        var newTask = response[i].task;
        var completion = response[i].status;
 
-       var $li = $('<li>' + newTask + ':'+ completion +'</li>');
+       console.log(completion);
+       
+
+       var $td = $('<tr><td>' + newTask +'</td>'+'<td>'+ completion +'</tr>');
 
 
 
-       $('#taskHeader').append($li);
+       $('#viewTasks').append($td);
     }
 }
 
