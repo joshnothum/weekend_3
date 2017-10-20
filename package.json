@@ -1,0 +1,25 @@
+{
+  "name": "weekend3",
+  "version": "1.0.0",
+  "description": "//TO DO//",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.16.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshnothum/weekend_3.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joshnothum/weekend_3/issues"
+  },
+  "homepage": "https://github.com/joshnothum/weekend_3#readme"
+}
