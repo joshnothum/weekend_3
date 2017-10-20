@@ -56,7 +56,7 @@ queHacer.post('/', function (req, res) {
             var queryText = 'INSERT INTO "quehacer" (task, status) VALUES ($1, $2);';
             console.log(queryText);
             
-            db.query(queryText,[newTask.taskInput, newTask.status], function (errorMakingQuery, result) {
+            db.query(queryText,[newTask.task, newTask.status], function (errorMakingQuery, result) {
                 // We have received an error or result at this point
                 done(); // pool +1
                 if (errorMakingQuery) {

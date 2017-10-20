@@ -27,7 +27,7 @@ function taskStasher() {
         data: addTask
     }).done(function (response) {
         console.log(response);
-        taskAdder(response);
+        refreshTasks();
         
         
     }).fail(function (message) {
@@ -58,13 +58,12 @@ function taskAdder(response) {
 }
 
 function refreshTasks() {
-
+    $('#viewTasks').empty();
     $.ajax({
         method: "GET",
         url: '/queHacer'
     }).done(function (response) {
         console.log('we did it!', response);
-        $('#taskHeader').empty();
         taskAdder(response);
         
         
