@@ -9,8 +9,9 @@ function weReady() {
 
 function clickHandler() {
     $('#addTask').on('click', taskStasher);
-    $('#viewTasks').on('click','.btn-danger', deleteTask);
-    $('#viewTasks').on('click', '.btn-success', completeTask);
+    $('#tables').on('click','.btn-danger', deleteTask);
+    $('#tables').on('click', '.btn-success', completeTask);
+    $('#completedTasks').on('click', '.btn-warning', returnTask);
 }
 
 
@@ -43,30 +44,40 @@ function taskStasher() {
 function taskAdder(response) {
     console.log('we are here in taskAdder');
     console.log(response);
-    
+
     for (var i = 0; i < response.length; i++) {
-        
+
         var taskID = response[i].id;
         console.log(taskID);
-        
-       var newTask = response[i].task;
-       var status = response[i].status;
+
+        var newTask = response[i].task;
+        var status = response[i].status;
         var $tr = $('<tr></tr>');
-        $tr.append('<td>'+newTask+'</td>');
-        $tr.append('<td>' + status + '</td>');
-        $tr.append('<td>'+'<button class="btn-success" data-id="'+taskID+'">Complete</button>'+'</td>');
-        $tr.append('<td>' + '<button class="btn-danger" data-id="'+ taskID +'">Delete</button>' + '</td>');
+        if (status === 'N') {
+            $tr.append('<td>' + newTask + '</td>');
+            $tr.append('<td>' + status + '</td>');
+            $tr.append('<td>' + '<button class="btn-success" data-id="' + taskID + '">Complete</button>' + '</td>');
+            $tr.append('<td>' + '<button class="btn-danger" data-id="' + taskID + '">Delete</button>' + '</td>');
 
-    //    var $td = $('<tr><td>' + newTask + '</td>' + '<td>' + status + '</td><td>' + '<button class="btn-success">Complete</button>'+'</td></tr>');
-        
+            //    var $td = $('<tr><td>' + newTask + '</td>' + '<td>' + status + '</td><td>' + '<button class="btn-success">Complete</button>'+'</td></tr>');
 
-       $('#viewTasks').append($tr);
+
+            $('#viewTasks').append($tr);
+        }//end of if
+        else {
+            $tr.append('<td>' + newTask + '</td>');
+            $tr.append('<td>' + status + '</td>');
+            $tr.append('<td>' + '<button class="btn-warning" data-id="' + taskID + '">Return</button>' + '</td>');
+            $tr.append('<td>' + '<button class="btn-danger" data-id="' + taskID + '">Delete</button>' + '</td>');
+            $('#completedTasks').append($tr);
+        }
     }
 }
 
 function refreshTasks() {
     $('#taskInput').val();
     $('#viewTasks').empty();
+    $('#completedTasks').empty();
     $.ajax({
         method: "GET",
         url: '/queHacer'
@@ -119,4 +130,5 @@ function completeTask() {
         
         
     });
+    refreshTasks();
 }
