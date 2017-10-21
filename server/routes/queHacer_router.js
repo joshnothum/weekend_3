@@ -30,8 +30,8 @@ queHacer.get('/', function (req, res) {
                     console.log('Error making query', errorMakingQuery);
                     res.sendStatus(500);
                 } else {
-                    console.log(result);
-                    console.log(result.rows);
+                    //console.log(result);
+                    //console.log(result.rows);
                     
                     
                     res.send(result.rows);
@@ -72,5 +72,69 @@ queHacer.post('/', function (req, res) {
         }
     }); // END POOL
 }); // END POST ROUTE
+
+queHacer.delete('/:id', function (req, res) {
+    // Attempt to connect to the database
+    var taskID = req.params.id;
+    console.log(taskID);
+
+    pool.connect(function (errorConnectingToDb, db, done) {
+        if (errorConnectingToDb) {
+            // There was an error and no connection was made
+            console.log('Error connecting', errorConnectingToDb);
+            res.sendStatus(500);
+        } else {
+            // We connected to the db!!!!! pool -1
+            var queryText = 'DELETE FROM "quehacer" WHERE "id" = $1';
+            console.log(queryText);
+
+            db.query(queryText, [taskID], function (errorMakingQuery, result) {
+                // We have received an error or result at this point
+                done(); // pool +1
+                if (errorMakingQuery) {
+                    console.log('Error making query', errorMakingQuery);
+                    res.sendStatus(500);
+                } else {
+                    console.log(result.rows);
+
+
+                    res.send(req.body);
+                }
+            }); // END QUERY
+        }
+    }); // END POOL
+}); // END DELETE ROUTE
+
+queHacer.put('/:id', function (req, res) {
+    // Attempt to connect to the database
+    var taskID = req.params.id;
+    console.log(taskID);
+
+    pool.connect(function (errorConnectingToDb, db, done) {
+        if (errorConnectingToDb) {
+            // There was an error and no connection was made
+            console.log('Error connecting', errorConnectingToDb);
+            res.sendStatus(500);
+        } else {
+            // We connected to the db!!!!! pool -1
+            var queryText = 'DELETE FROM "quehacer" WHERE "id" = $1';
+            console.log(queryText);
+
+            db.query(queryText, [taskID], function (errorMakingQuery, result) {
+                // We have received an error or result at this point
+                done(); // pool +1
+                if (errorMakingQuery) {
+                    console.log('Error making query', errorMakingQuery);
+                    res.sendStatus(500);
+                } else {
+                    console.log(result.rows);
+
+
+                    res.send(req.body);
+                }
+            }); // END QUERY
+        }
+    }); // END POOL
+}); // END DELETE ROUTE
 
 module.exports = queHacer;

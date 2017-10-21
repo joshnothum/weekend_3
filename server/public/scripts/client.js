@@ -9,7 +9,8 @@ function weReady() {
 
 function clickHandler() {
     $('#addTask').on('click', taskStasher);
-    $('#viewTasks').on('click','#taskID', deleteTask);
+    $('#viewTasks').on('click','.btn-danger', deleteTask);
+    $('#viewTasks').on('click', '.btn-success', completeTask);
 }
 
 
@@ -44,18 +45,17 @@ function taskAdder(response) {
     console.log(response);
     
     for (var i = 0; i < response.length; i++) {
-        var taskID = response[i].taskID;
+        
+        var taskID = response[i].id;
+        console.log(taskID);
+        
        var newTask = response[i].task;
        var status = response[i].status;
         var $tr = $('<tr></tr>');
         $tr.append('<td>'+newTask+'</td>');
         $tr.append('<td>' + status + '</td>');
-        $tr.append('<td>'+'<button class="btn-success" id="'+taskID+'">Complete</button>'+'</td>');
-        $tr.append('<td>' + '<button class="btn-danger">Delete</button>' + '</td>');
-        
-       console.log(status);
-       
-       
+        $tr.append('<td>'+'<button class="btn-success" data-id="'+taskID+'">Complete</button>'+'</td>');
+        $tr.append('<td>' + '<button class="btn-danger" data-id="'+ taskID +'">Delete</button>' + '</td>');
 
     //    var $td = $('<tr><td>' + newTask + '</td>' + '<td>' + status + '</td><td>' + '<button class="btn-success">Complete</button>'+'</td></tr>');
         
@@ -65,6 +65,7 @@ function taskAdder(response) {
 }
 
 function refreshTasks() {
+    $('#taskInput').val();
     $('#viewTasks').empty();
     $.ajax({
         method: "GET",
@@ -84,16 +85,37 @@ function refreshTasks() {
 }
 
 function deleteTask() {
+    var taskID = $(this).data('id');
+    console.log(taskID);
+    
     $.ajax({
         method: 'DELETE',
-        url: '/queHacer'
+        url: '/queHacer/' + taskID
     }).done(function (response) {
         console.log('by the beard of Zeus!',response);
 
         
         
     }).fail(function (message) {
-        console.log("I don't think we have that kidn of time",message);
+        console.log("I don't think we have that kind of time",message);
+        
+        
+    });
+
+    refreshTasks();
+}
+
+function completeTask() {
+    var taskID = $(this).data('id');
+    $.ajax({
+        method: 'PUT',
+        url: 'queHacer/' + taskID
+    }).done(function (response) {
+        console.log('we are in completeTask:', response);
+        
+        
+    }).fail(function (message) {
+        console.log('things were good and now they are bad:', message);
         
         
     });
