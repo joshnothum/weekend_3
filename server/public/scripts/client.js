@@ -56,7 +56,7 @@ function taskAdder(response) {
         if (status === 'N') {
             $tr.append('<td>' + newTask + '</td>');
             $tr.append('<td>' + status + '</td>');
-            $tr.append('<td>' + '<button class="btn-success" data-id="' + taskID + '">Complete</button>' + '</td>');
+            $tr.append('<td>' + '<button class="btn-success" data-id="' + taskID + ' value ="' + status +'">Complete</button>' + '</td>');
             $tr.append('<td>' + '<button class="btn-danger" data-id="' + taskID + '">Delete</button>' + '</td>');
 
             //    var $td = $('<tr><td>' + newTask + '</td>' + '<td>' + status + '</td><td>' + '<button class="btn-success">Complete</button>'+'</td></tr>');
@@ -68,7 +68,7 @@ function taskAdder(response) {
             $tr.append('<td>' + newTask + '</td>');
             $tr.append('<td>' + status + '</td>');
             $tr.append('<td>' + '<button class="btn-warning" data-id="' + taskID + '">Return</button>' + '</td>');
-            $tr.append('<td>' + '<button class="btn-danger" data-id="' + taskID + '">Delete</button>' + '</td>');
+            $tr.append('<td>' + '<button class="btn-danger" data-id="' + taskID + ' value ="'+status+'">Delete</button>' + '</td>');
             $('#completedTasks').append($tr);
         }
     }
@@ -118,9 +118,13 @@ function deleteTask() {
 
 function completeTask() {
     var taskID = $(this).data('id');
+    var status = $(this).val();
+    console.log(status);
+    
     $.ajax({
         method: 'PUT',
-        url: 'queHacer/' + taskID
+        url: 'queHacer/' + taskID,
+        data: status
     }).done(function (response) {
         console.log('we are in completeTask:', response);
         
