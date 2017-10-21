@@ -117,8 +117,10 @@ queHacer.put('/:id', function (req, res) {
             res.sendStatus(500);
         } else {
             // We connected to the db!!!!! pool -1
-            var queryText = 'DELETE FROM "quehacer" WHERE "id" = $1';
+            var queryText = 'UPDATE "quehacer" SET "status" = \'Y\' WHERE "id" = $1';
             console.log(queryText);
+
+
 
             db.query(queryText, [taskID], function (errorMakingQuery, result) {
                 // We have received an error or result at this point
@@ -127,14 +129,14 @@ queHacer.put('/:id', function (req, res) {
                     console.log('Error making query', errorMakingQuery);
                     res.sendStatus(500);
                 } else {
-                    console.log(result.rows);
 
 
-                    res.send(req.body);
+                    res.sendStatus(200);
                 }
-            }); // END QUERY
-        }
+            });
+        }  // END QUERY
     }); // END POOL
-}); // END DELETE ROUTE
+});
+ // END PUT ROUTE
 
 module.exports = queHacer;
