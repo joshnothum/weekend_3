@@ -2,26 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script src="vendors/jquery.js"></script> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="vendors/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="vendors/bootstrap/css/bootstrap-theme.css">
+    <link href="styles/style.css" rel="stylesheet">
+    <script src="vendors/jquery.js"></script> 
     <script src="scripts/client.js"></script>
     <title>Weekend 3</title>
 </head>
 <body>
     <h1>Weekend 3</h1>
-    <div id="container">
+    <div class="container">
         <div id="taskMaker">
             <label for="taskInput"> Task Input:</label>
             <input id="taskInput" type="text">
             <button id="addTask">Add Task</button>
         </div>
         <div id= "taskList">
-        <table>
+        <table class="table">
             <thead>
                 <tr>
                     <th>Task</th>
-                    <th>Completion</th>
+                    <th>Complete?</th>
                 </tr>
             </thead>
             <tbody id="viewTasks">
