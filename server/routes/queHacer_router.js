@@ -63,10 +63,9 @@ queHacer.post('/', function (req, res) {
                     console.log('Error making query', errorMakingQuery);
                     res.sendStatus(500);
                 } else {
-                    console.log(result.rows);
 
 
-                    res.send(req.body);
+                    res.sendStatus(201);
                 }
             }); // END QUERY
         }
@@ -98,7 +97,7 @@ queHacer.delete('/:id', function (req, res) {
                     console.log(result.rows);
 
 
-                    res.send(req.body);
+                    res.sendStatus(201);
                 }
             }); // END QUERY
         }
@@ -109,12 +108,13 @@ queHacer.put('/:id', function (req, res) {
     // Attempt to connect to the database
     var taskID = req.params.id;
     var status = req.body.status;
-    var queryText = '';
+    
     console.log(taskID);
     console.log(status);
     
 
     pool.connect(function (errorConnectingToDb, db, done) {
+        var queryText = '';
         if (errorConnectingToDb) {
             // There was an error and no connection was made
             console.log('Error connecting', errorConnectingToDb);
@@ -129,7 +129,7 @@ queHacer.put('/:id', function (req, res) {
         }   
 
 
-            db.query(queryText, [taskID, status], function (errorMakingQuery, result) {
+            db.query(queryText, [taskID], function (errorMakingQuery, result) {
                 // We have received an error or result at this point
                 done(); // pool +1
                 if (errorMakingQuery) {
@@ -138,7 +138,7 @@ queHacer.put('/:id', function (req, res) {
                 } else {
 
 
-                    res.sendStatus(200);
+                    res.sendStatus(201);
                 }
             });
         }  // END QUERY

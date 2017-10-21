@@ -11,7 +11,7 @@ function clickHandler() {
     $('#addTask').on('click', taskStasher);
     $('#tables').on('click','.btn-danger', deleteTask);
     $('#tables').on('click', '.btn-success', completeTask);
-    $('#completedTasks').on('click', '.btn-warning', returnTask);
+    $('#tables').on('click', '.btn-warning', completeTask);
 }
 
 
@@ -30,7 +30,6 @@ function taskStasher() {
         data: addTask
     }).done(function (response) {
         console.log(response);
-        refreshTasks();
         
         
     }).fail(function (message) {
@@ -38,7 +37,7 @@ function taskStasher() {
         
         
     });
-    
+    refreshTasks();
 }
 
 function taskAdder(response) {
@@ -56,7 +55,7 @@ function taskAdder(response) {
         if (status === 'N') {
             $tr.append('<td>' + newTask + '</td>');
             $tr.append('<td>' + status + '</td>');
-            $tr.append('<td>' + '<button class="btn-success" data-id="' + taskID + ' value ="' + status +'">Complete</button>' + '</td>');
+            $tr.append('<td>' + '<button class="btn-success" data-id="' + taskID + '" value ="' + status +'">Complete</button>' + '</td>');
             $tr.append('<td>' + '<button class="btn-danger" data-id="' + taskID + '">Delete</button>' + '</td>');
 
             //    var $td = $('<tr><td>' + newTask + '</td>' + '<td>' + status + '</td><td>' + '<button class="btn-success">Complete</button>'+'</td></tr>');
@@ -75,7 +74,7 @@ function taskAdder(response) {
 }
 
 function refreshTasks() {
-    $('#taskInput').val();
+    $('#taskInput').val('');
     $('#viewTasks').empty();
     $('#completedTasks').empty();
     $.ajax({
@@ -119,7 +118,8 @@ function deleteTask() {
 function completeTask() {
     var taskID = $(this).data('id');
     var status = $(this).val();
-    console.log(status);
+    console.log('this is my status:',status);
+    status = {status};
     
     $.ajax({
         method: 'PUT',
@@ -127,12 +127,11 @@ function completeTask() {
         data: status
     }).done(function (response) {
         console.log('we are in completeTask:', response);
-        
+        refreshTasks();
         
     }).fail(function (message) {
         console.log('things were good and now they are bad:', message);
         
         
     });
-    refreshTasks();
 }
