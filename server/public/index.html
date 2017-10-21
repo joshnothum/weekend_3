@@ -11,16 +11,17 @@
     <script src="scripts/client.js"></script>
     <title>Weekend 3</title>
 </head>
-<body>
-    <h1>Weekend 3</h1>
-    <div class="container">
+<body class="gradient">
+<div class="container">
+        <h1>Weekend 3</h1>
         <div id="taskMaker">
             <label for="taskInput"> Task Input:</label>
-            <input id="taskInput" type="text">
+            <input class="form-control" id="taskInput" type="text">
+            <br>
             <button id="addTask">Add Task</button>
         </div>
-        <div id= "taskList">
-        <table class="table">
+        <br>
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>Task</th>
@@ -32,7 +33,6 @@
             <tbody id="viewTasks">
             </tbody>
         </table>
-        </div>
     </div>
 </body>
 </html>
