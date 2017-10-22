@@ -9,9 +9,8 @@ function weReady() {
 
 function clickHandler() {
     $('#hideTasks').on('click',function(){
-        $('#readyToHide').fadeToggle(1000);
+        $('#readyToHide').fadeToggle(400);
     });
-    $('#tables').on('click', '.btn-danger', fadeOut);
     $('#addTask').on('click', taskStasher);
     $('#tables').on('click','.btn-danger', deleteTask);
     $('#tables').on('click', '.btn-success', completeTask);
@@ -33,14 +32,17 @@ function taskStasher() {
         url: '/queHacer',
         data: addTask
     }).done(function (response) {
-        console.log(response);
-        refreshTasks(response);
+        
+            refreshTasks(response);
         
         
     }).fail(function (message) {
         console.log('try again!', message);
         
         
+    });
+    $(this).closest('tr').fadeIn('fast', function () {
+        refreshTasks();
     });
 }
 
@@ -99,9 +101,7 @@ function refreshTasks() {
 }
 
 function deleteTask() {
-
     var taskID = $(this).data('id');
-    $(this).closest('tr').fadeOut('slow');
 
     
     
@@ -113,7 +113,6 @@ function deleteTask() {
         url: '/queHacer/' + taskID
     }).done(function (response) {
         console.log('by the beard of Zeus!', response);
-        refreshTasks();
 
         
         
@@ -122,6 +121,10 @@ function deleteTask() {
         
         
     });
+
+    $(this).closest('tr').fadeOut('fast', function () {
+                refreshTasks();
+});
 }
 
 function completeTask() {
@@ -143,7 +146,34 @@ function completeTask() {
         
         
     });
+    $(this).closest('tr').fadeOut('fast', function () {
+                refreshTasks();
+});
 }
-function fadeOut() {
-    $(this).closest('tr').fadeOut('slow');
-}
+
+
+
+/*function fadeOut() {
+      var taskID = $(this).data('id');
+        $(this).closest('tr').fadeOut('slow');
+
+
+
+      console.log(taskID);
+
+      $.ajax({
+          method: 'DELETE',
+          url: '/queHacer/' + taskID
+      }).done(function (response) {
+          console.log('by the beard of Zeus!', response);
+          refreshTasks(fadeOutRow);
+          
+
+
+
+      }).fail(function (message) {
+          console.log("I don't think we have that kind of time", message);
+
+
+      });
+}*/
