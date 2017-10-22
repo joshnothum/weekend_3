@@ -30,8 +30,8 @@ queHacer.get('/', function (req, res) {
                     console.log('Error making query', errorMakingQuery);
                     res.sendStatus(500);
                 } else {
-                    //console.log(result);
-                    //console.log(result.rows);
+                    console.log(result);
+                    console.log(result.rows);
                     
                     
                     res.send(result.rows);
@@ -65,7 +65,7 @@ queHacer.post('/', function (req, res) {
                 } else {
 
 
-                    res.sendStatus(201);
+                    res.send(req.body);
                 }
             }); // END QUERY
         }

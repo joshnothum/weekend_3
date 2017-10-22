@@ -30,6 +30,7 @@ function taskStasher() {
         data: addTask
     }).done(function (response) {
         console.log(response);
+        refreshTasks(response);
         
         
     }).fail(function (message) {
@@ -37,7 +38,6 @@ function taskStasher() {
         
         
     });
-    refreshTasks();
 }
 
 function taskAdder(response) {
@@ -67,10 +67,11 @@ function taskAdder(response) {
             $tr.append('<td>' + newTask + '</td>');
             $tr.append('<td>' + status + '</td>');
             $tr.append('<td>' + '<button class="btn-warning" data-id="' + taskID + '">Return</button>' + '</td>');
-            $tr.append('<td>' + '<button class="btn-danger" data-id="' + taskID + ' value ="'+status+'">Delete</button>' + '</td>');
+            $tr.append('<td>' + '<button class="btn-danger" data-id="' + taskID + '" value ="'+status+'">Delete</button>' + '</td>');
             $('#completedTasks').append($tr);
         }
     }
+
 }
 
 function refreshTasks() {
@@ -96,6 +97,7 @@ function refreshTasks() {
 
 function deleteTask() {
     var taskID = $(this).data('id');
+    
     console.log(taskID);
     
     $.ajax({
