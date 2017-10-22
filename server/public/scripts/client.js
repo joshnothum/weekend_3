@@ -47,7 +47,6 @@ function taskAdder(response) {
     for (var i = 0; i < response.length; i++) {
 
         var taskID = response[i].id;
-        console.log(taskID);
 
         var newTask = response[i].task;
         var status = response[i].status;
@@ -69,7 +68,7 @@ function taskAdder(response) {
             $tr.append('<td>' + '<button class="btn-warning" data-id="' + taskID + '">Return</button>' + '</td>');
             $tr.append('<td>' + '<button class="btn-danger" data-id="' + taskID + '" value ="'+status+'">Delete</button>' + '</td>');
             $('#completedTasks').append($tr);
-        }
+        }//end of else
     }
 
 }
@@ -97,6 +96,7 @@ function refreshTasks() {
 
 function deleteTask() {
     var taskID = $(this).data('id');
+    $('.btn-danger').closest('tr').fadeOut('slow');
     
     console.log(taskID);
     
@@ -105,6 +105,7 @@ function deleteTask() {
         url: '/queHacer/' + taskID
     }).done(function (response) {
         console.log('by the beard of Zeus!',response);
+        refreshTasks();
 
         
         
@@ -113,8 +114,6 @@ function deleteTask() {
         
         
     });
-
-    refreshTasks();
 }
 
 function completeTask() {
