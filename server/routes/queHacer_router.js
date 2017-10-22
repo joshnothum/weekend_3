@@ -96,7 +96,7 @@ queHacer.delete('/:id', function (req, res) {
                 } else {
 
 
-                    res.sendStatus(201);
+                    res.send(result.rows);
                 }
             }); // END QUERY
         }

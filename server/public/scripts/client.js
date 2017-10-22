@@ -12,7 +12,7 @@ function clickHandler() {
         $('#readyToHide').fadeToggle(400);
     });
     $('#addTask').on('click', taskStasher);
-    $('#tables').on('click','.btn-danger', deleteTask);
+    $('#tables').on('click', '.btn-danger', deleteTask);
     $('#tables').on('click', '.btn-success', completeTask);
     $('#tables').on('click', '.btn-warning', completeTask);
 }
@@ -21,7 +21,7 @@ function clickHandler() {
 function taskStasher() {
     var task = $('#taskInput').val();
     var status = 'N';
-
+    var $this = $(this).closest('tr');
     var addTask = {task, status};
     console.log(addTask);
     
@@ -32,17 +32,12 @@ function taskStasher() {
         url: '/queHacer',
         data: addTask
     }).done(function (response) {
-        
-            refreshTasks(response);
-        
+        refreshTasks();
         
     }).fail(function (message) {
         console.log('try again!', message);
         
         
-    });
-    $(this).closest('tr').fadeIn('fast', function () {
-        refreshTasks();
     });
 }
 
@@ -91,6 +86,7 @@ function refreshTasks() {
         taskAdder(response);
         
         
+        
     }).fail(function (error) {
         console.log('oh no! we didnt do it!', message);
         
@@ -101,31 +97,28 @@ function refreshTasks() {
 }
 
 function deleteTask() {
+    if(confirm("Delete?") == true){
     var taskID = $(this).data('id');
+            $.ajax({
+                method: 'DELETE',
+                url: '/queHacer/' + taskID
+            }).done(function (response) {
+                console.log('by the beard of Zeus!', response);
 
-    
-    
-    
-    console.log(taskID);
-    
-    $.ajax({
-        method: 'DELETE',
-        url: '/queHacer/' + taskID
-    }).done(function (response) {
-        console.log('by the beard of Zeus!', response);
 
-        
-        
-    }).fail(function (message) {
-        console.log("I don't think we have that kind of time",message);
-        
-        
-    });
 
-    $(this).closest('tr').fadeOut('fast', function () {
-                refreshTasks();
-});
-}
+            }).fail(function (message) {
+                console.log("I don't think we have that kind of time", message);
+
+
+            });
+
+            $(this).closest('tr').fadeOut('fast', function () {
+
+            });
+        }
+
+    }
 
 function completeTask() {
     var taskID = $(this).data('id');
@@ -146,12 +139,7 @@ function completeTask() {
         
         
     });
-    $(this).closest('tr').fadeOut('fast', function () {
-                refreshTasks();
-});
 }
-
-
 
 /*function fadeOut() {
       var taskID = $(this).data('id');
