@@ -8,6 +8,9 @@ function weReady() {
 }
 
 function clickHandler() {
+    $('#hideTasks').on('click',function(){
+        $('#readyToHide').fadeToggle(1000);
+    });
     $('#addTask').on('click', taskStasher);
     $('#tables').on('click','.btn-danger', deleteTask);
     $('#tables').on('click', '.btn-success', completeTask);
@@ -95,8 +98,11 @@ function refreshTasks() {
 }
 
 function deleteTask() {
+
     var taskID = $(this).data('id');
-    $('.btn-danger').closest('tr').fadeOut('slow');
+
+    
+    
     
     console.log(taskID);
     
@@ -135,4 +141,7 @@ function completeTask() {
         
         
     });
+}
+function fadeOut() {
+    $(this).closest('tr').fadeOut('slow');
 }
