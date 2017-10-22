@@ -11,6 +11,7 @@ function clickHandler() {
     $('#hideTasks').on('click',function(){
         $('#readyToHide').fadeToggle(1000);
     });
+    $('#tables').on('click', '.btn-danger', fadeOut);
     $('#addTask').on('click', taskStasher);
     $('#tables').on('click','.btn-danger', deleteTask);
     $('#tables').on('click', '.btn-success', completeTask);
@@ -100,6 +101,7 @@ function refreshTasks() {
 function deleteTask() {
 
     var taskID = $(this).data('id');
+    $(this).closest('tr').fadeOut('slow');
 
     
     
@@ -110,7 +112,7 @@ function deleteTask() {
         method: 'DELETE',
         url: '/queHacer/' + taskID
     }).done(function (response) {
-        console.log('by the beard of Zeus!',response);
+        console.log('by the beard of Zeus!', response);
         refreshTasks();
 
         

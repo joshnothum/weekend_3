@@ -94,7 +94,6 @@ queHacer.delete('/:id', function (req, res) {
                     console.log('Error making query', errorMakingQuery);
                     res.sendStatus(500);
                 } else {
-                    console.log(result.rows);
 
 
                     res.sendStatus(201);
