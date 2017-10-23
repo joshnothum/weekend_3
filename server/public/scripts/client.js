@@ -49,7 +49,6 @@ function taskStasher() {
         url: '/queHacer',
         data: addTask
     }).done(function (response) {
-        console.log(response);
         
         refreshTasks();
         
@@ -69,19 +68,19 @@ function taskAdder(response) {
         var status = response[i].status;
         var $tr = $('<tr></tr>');
         if (status === 'N') {
-            $tr.append('<td>' + newTask + '</td>');
-            $tr.append('<td>' + status + '</td>');
-            $tr.append('<td>' + '<button class="btn-success" data-id="' + taskID + '" value ="' + status +'">Complete</button>' + '</td>');
-            $tr.append('<td>' + '<button class="btn-danger" data-id="' + taskID + '">Delete</button>' + '</td>');
+            $tr.append('<td class = "info">' + newTask + '</td>');
+            $tr.append('<td class = "info">' + status + '</td>');
+            $tr.append('<td class = "info">' + '<button class="btn-success" data-id="' + taskID + '" value ="' + status +'">Complete</button>' + '</td>');
+            $tr.append('<td class = "info">' + '<button class="btn-danger" data-id="' + taskID + '">Delete</button>' + '</td>');
 
 
             $('#viewTasks').append($tr);
         }//end of if
         else {
-            $tr.append('<td>' + newTask + '</td>');
-            $tr.append('<td>' + status + '</td>');
-            $tr.append('<td>' + '<button class="btn-warning" data-id="' + taskID + '">Return</button>' + '</td>');
-            $tr.append('<td>' + '<button class="btn-danger" data-id="' + taskID + '" value ="'+status+'">Delete</button>' + '</td>');
+            $tr.append('<td class = "success">' + newTask + '</td>');
+            $tr.append('<td class = "success">' + status + '</td>');
+            $tr.append('<td class = "success">' + '<button class="btn-warning" data-id="' + taskID + '">Return</button>' + '</td>');
+            $tr.append('<td  class = "success">' + '<button class="btn-danger" data-id="' + taskID + '" value ="'+status+'">Delete</button>' + '</td>');
             $('#completedTasks').append($tr);
         }//end of else
     }//end of for loop

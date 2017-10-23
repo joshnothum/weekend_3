@@ -75,8 +75,7 @@ queHacer.post('/', function (req, res) {
 queHacer.delete('/:id', function (req, res) {
     // Attempt to connect to the database
     var taskID = req.params.id;
-    console.log(taskID);
-
+    
     pool.connect(function (errorConnectingToDb, db, done) {
         if (errorConnectingToDb) {
             // There was an error and no connection was made
@@ -85,7 +84,7 @@ queHacer.delete('/:id', function (req, res) {
         } else {
             // We connected to the db!!!!! pool -1
             var queryText = 'DELETE FROM "quehacer" WHERE "id" = $1';
-            console.log(queryText);
+            
 
             db.query(queryText, [taskID], function (errorMakingQuery, result) {
                 // We have received an error or result at this point
@@ -108,9 +107,6 @@ queHacer.put('/:id', function (req, res) {
     var taskID = req.params.id;
     var status = req.body.status;
     
-    console.log(taskID);
-    console.log(status);
-    
 
     pool.connect(function (errorConnectingToDb, db, done) {
         var queryText = '';
@@ -122,7 +118,7 @@ queHacer.put('/:id', function (req, res) {
             // We connected to the db!!!!! pool -1
                 if(status === 'N'){
             queryText = 'UPDATE "quehacer" SET "status" = \'Y\' WHERE "id" = $1';
-            console.log(queryText);
+
         }else{
              queryText = 'UPDATE "quehacer" SET "status" = \'N\' WHERE "id" = $1';
         }   
