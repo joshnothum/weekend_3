@@ -1,6 +1,7 @@
 console.log('js sourced');
 
 $(document).ready(weReady);
+
 function weReady() {
     console.log('icky thump!');
     clickHandler();
@@ -8,7 +9,7 @@ function weReady() {
 }
 
 function clickHandler() {
-    $('#hideTasks').on('click',function(){
+    $('#hideTasks').on('click', function () {
         $('#readyToHide').fadeToggle(400);
     });
     $('#addTask').on('click', taskStasher);
@@ -16,6 +17,7 @@ function clickHandler() {
     $('#tables').on('click', '.btn-success', completeTask);
     $('#tables').on('click', '.btn-warning', completeTask);
 }
+
 function refreshTasks() {
     $('#taskInput').val('');
     $('#viewTasks').empty();
@@ -42,20 +44,23 @@ function taskStasher() {
     var task = $('#taskInput').val();
     var status = 'N'; //automatically set status to N; No need for extra input;
     var $this = $(this).closest('tr');
-    var addTask = {task, status};
+    var addTask = {
+        task,
+        status
+    };
 
     $.ajax({
         method: "POST",
         url: '/queHacer',
         data: addTask
     }).done(function (response) {
-        
+
         refreshTasks();
-        
+
     }).fail(function (message) {
         console.log('try again!', message);
-        
-        
+
+
     });
 }
 
@@ -70,44 +75,47 @@ function taskAdder(response) {
         if (status === 'N') {
             $tr.append('<td class = "info">' + newTask + '</td>');
             $tr.append('<td class = "info">' + status + '</td>');
-            $tr.append('<td class = "info">' + '<button class="btn-success" data-id="' + taskID + '" value ="' + status +'">Complete</button>' + '</td>');
+            $tr.append('<td class = "info">' + '<button class="btn-success" data-id="' + taskID + '" value ="' + status + '">Complete</button>' + '</td>');
             $tr.append('<td class = "info">' + '<button class="btn-danger" data-id="' + taskID + '">Delete</button>' + '</td>');
 
 
             $('#viewTasks').append($tr);
-        }//end of if
+        } //end of if
         else {
             $tr.append('<td class = "success">' + newTask + '</td>');
             $tr.append('<td class = "success">' + status + '</td>');
             $tr.append('<td class = "success">' + '<button class="btn-warning" data-id="' + taskID + '">Return</button>' + '</td>');
-            $tr.append('<td  class = "success">' + '<button class="btn-danger" data-id="' + taskID + '" value ="'+status+'">Delete</button>' + '</td>');
+            $tr.append('<td class = "success">' + '<button class="btn-danger" data-id="' + taskID + '" value ="' + status + '">Delete</button>' + '</td>');
             $('#completedTasks').append($tr);
-        }//end of else
-    }//end of for loop
+        } //end of else
+    } //end of for loop
 
-}//end of taskAdder
+} //end of taskAdder
 
 function deleteTask() {
     //added confrim message box
-    if(confirm("Delete?") == true){
-    var taskID = $(this).data('id');
-            $.ajax({
-                method: 'DELETE',
-                url: '/queHacer/' + taskID
-            }).done(function (response) {
-                console.log('by the beard of Zeus!', response);
-            }).fail(function (message) {
-                console.log("I don't think we have that kind of time", message);
-            });
-        }//end of confirm if
-        $(this).closest('tr').fadeOut(1000);
-    }//end of deleteTasks
+    if (confirm("Delete?") == true) {
+        var taskID = $(this).data('id');
+        $.ajax({
+            method: 'DELETE',
+            url: '/queHacer/' + taskID
+        }).done(function (response) {
+            console.log('by the beard of Zeus!', response);
+            
+        }).fail(function (message) {
+            console.log("I don't think we have that kind of time", message);
+        });
+        
+     } refreshTasks();
+} //end of deleteTasks
 
 function completeTask() {
     var taskID = $(this).data('id');
     var status = $(this).val();
-    status = {status};
-    
+    status = {
+        status
+    };
+
     $.ajax({
         method: 'PUT',
         url: 'queHacer/' + taskID,
@@ -115,10 +123,10 @@ function completeTask() {
     }).done(function (response) {
         console.log('we are in completeTask:', response);
         refreshTasks();
-        
+
     }).fail(function (message) {
         console.log('things were good and now they are bad:', message);
-        
-        
+
+
     });
-}//end of completeTasks
+} //end of completeTasks
