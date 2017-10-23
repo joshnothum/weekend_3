@@ -97,16 +97,11 @@ function deleteTask() {
                 url: '/queHacer/' + taskID
             }).done(function (response) {
                 console.log('by the beard of Zeus!', response);
-
             }).fail(function (message) {
                 console.log("I don't think we have that kind of time", message);
             });
-
-            $(this).closest('tr').fadeOut('fast', function () {
-
-            });
         }//end of confirm if
-
+        $(this).closest('tr').fadeOut(1000);
     }//end of deleteTasks
 
 function completeTask() {
